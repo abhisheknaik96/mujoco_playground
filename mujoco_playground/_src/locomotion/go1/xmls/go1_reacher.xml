@@ -1,0 +1,135 @@
+<mujoco model="go1 scene">
+  <include file="go1_mjx_fullcollisions.xml"/>
+
+  <statistic center="0 0 0.1" extent="0.8" meansize="0.04"/>
+
+  <default>
+    <geom solimp=".9 .9 .01"/>
+    <default class="sphere">
+      <geom type="sphere" material="sphere" size="0.05" friction="1 .01 .01"/>
+    </default>
+    <default class="border">
+      <geom type="capsule" size="0.4" rgba=".4 .4 .4 1" contype="1" conaffinity="1"/>
+    </default>
+    <default class="borderpost">
+      <geom type="box" size="0.41 0.41 0.41" rgba=".55 .55 .55 1" contype="1" conaffinity="1"/>
+    </default>
+  </default>
+
+  <visual>
+    <headlight diffuse=".8 .8 .8" ambient=".2 .2 .2" specular="1 1 1"/>
+    <rgba force="1 0 0 1"/>
+    <global azimuth="120" elevation="-20"/>
+    <map force="0.01"/>
+    <scale forcewidth="0.3" contactwidth="0.5" contactheight="0.2"/>
+    <quality shadowsize="8192"/>
+  </visual>
+
+  <asset>
+    <texture type="skybox" builtin="gradient" width="512" height="512" rgb1=".4 .6 .8" rgb2="0 0 0"/>
+    <texture name="texgeom" type="cube" builtin="flat" mark="cross" width="128" height="128" rgb1="0.6 0.6 0.6" rgb2="0.6 0.6 0.6" markrgb="1 1 1"/>
+    <texture name="texplane" type="2d" builtin="checker" rgb1=".4 .4 .4" rgb2=".6 .6 .6" width="512" height="512"/>
+    <material name="MatPlane" reflectance="0.3" texture="texplane" texrepeat="1 1" texuniform="true" rgba=".7 .7 .7 1"/>
+    <material name="capsule" texture="texgeom" texuniform="true" rgba=".4 .9 .6 1"/>
+    <material name="ellipsoid" texture="texgeom" texuniform="true" rgba=".4 .6 .9 1"/>
+    <material name="box" texture="texgeom" texuniform="true" rgba=".4 .9 .9 1"/>
+    <material name="cylinder" texture="texgeom" texuniform="true" rgba=".8 .6 .8 1"/>
+    <material name="sphere" texture="texgeom" texuniform="true" rgba=".9 .1 .1 1"/>
+    <material name="red_material" rgba="1 0 0 1"/>
+    <material name="green_material" rgba="0 1 0 1"/>
+  </asset>
+
+  <worldbody>
+<!--    <attach model="go2" body="base" prefix="go2_"/>   -->
+    <light directional="true" diffuse=".8 .8 .8" pos="0 0 10" dir="0 0 -10"/>
+    <geom name="floor" type="plane" size="3 3 .5" material="MatPlane" friction="0.6" condim="3" contype="1" conaffinity="0"/>
+    <geom class="border" fromto="-3 3 0 3 3 0" name="wall_0"/>
+    <geom class="border" fromto="-3 -3 0 3 -3 0" name="wall_1"/>
+    <geom class="border" fromto="3 3 0 3 -3 0" name="wall_2"/>
+    <geom class="border" fromto="-3 3 0 -3 -3 0" name="wall_3"/>
+    <!-- <geom class="borderpost" pos="3 3 0" contype="1" conaffinity="1"/>
+    <geom class="borderpost" pos="-3 3 0" contype="1" conaffinity="1"/>
+    <geom class="borderpost" pos="3 -3 0" contype="1" conaffinity="1"/>
+    <geom class="borderpost" pos="-3 -3 0" contype="1" conaffinity="1"/> -->
+
+    <body name="red_object_1" pos="1.5 1.5 0.1">
+      <geom name="red_sphere_1" type="sphere" size="0.1" material="red_material"/>
+    </body>
+    <body name="red_object_2" pos="-1.5 -1.5 0.1">
+      <geom name="red_sphere_2" type="sphere" size="0.1" material="red_material"/>
+    </body>
+
+    <body name="green_object_1" pos="1.5 -1.5 0.1">
+      <geom name="green_sphere_1" type="sphere" size="0.1" material="green_material"/>
+    </body>
+    <body name="green_object_2" pos="-1.5 1.5 0.1">
+      <geom name="green_sphere_2" type="sphere" size="0.1" material="green_material"/>
+    </body>
+
+    <!-- <frame pos="-2 -2 2.5">
+      <replicate count="5" offset="0 1 0" euler="0 180 0">
+        <frame pos="0 0 -1.5">
+          <replicate count="4" offset="0 0 1" euler="0 0 60">
+            <body euler="30 40 0">
+              <freejoint/>
+              <geom class="sphere"/>
+            </body>
+          </replicate>
+        </frame>
+      </replicate>
+    </frame> -->
+
+    <!-- <frame pos="-1 -2 2.5">
+      <replicate count="5" offset="0 1 0" euler="0 180 0">
+        <frame pos="0 0 -1.5">
+          <replicate count="4" offset="0 0 1" euler="0 0 60">
+            <body euler="20 40 60">
+              <freejoint/>
+              <geom class="sphere"/>
+            </body>
+          </replicate>
+        </frame>
+      </replicate>
+    </frame>
+
+    <frame pos="1 -2 2.5">
+      <replicate count="5" offset="0 1 0" euler="0 180 0">
+        <frame pos="0 0 -1.5">
+          <replicate count="4" offset="0 0 1" euler="0 0 60">
+            <body euler="60 30 0">
+              <freejoint/>
+              <geom class="sphere"/>
+            </body>
+          </replicate>
+        </frame>
+      </replicate>
+    </frame>
+
+    <frame pos="2 -2 2.5">
+      <replicate count="5" offset="0 1 0" euler="0 180 0">
+        <frame pos="0 0 -1.5">
+          <replicate count="4" offset="0 0 1" euler="0 0 60">
+            <body euler="20 40 60">
+              <freejoint/>
+              <geom class="sphere"/>
+            </body>
+          </replicate>
+        </frame>
+      </replicate>
+    </frame> -->
+
+  </worldbody>
+
+  <keyframe>
+    <key name="home" qpos="
+    1.2 1.5 0.3
+    1 0 0 0
+    0.1 0.9 -1.8
+    -0.1 0.9 -1.8
+    0.1 0.9 -1.8
+    -0.1 0.9 -1.8
+    "
+      ctrl="0.1 0.9 -1.8 -0.1 0.9 -1.8 0.1 0.9 -1.8 -0.1 0.9 -1.8"/>
+  </keyframe>
+  
+</mujoco>

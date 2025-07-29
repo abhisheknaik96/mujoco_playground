@@ -52,6 +52,10 @@ FEET_GEOMS = [
     "RL",
 ]
 
+WALL_GEOMS = ["wall_0", "wall_1", "wall_2", "wall_3"]
+
+OBJ_GEOMS = ["red_sphere_1", "red_sphere_2", "green_sphere_1", "green_sphere_2"]    # ToDo: populate this automatically
+
 FEET_POS_SENSOR = [f"{site}_pos" for site in FEET_SITES]
 
 ROOT_BODY = "trunk"
